@@ -396,7 +396,7 @@ program
 	.command('check-updates')
 	.description('Check for updates to the Meritt CLI')
 	.action(() => {
-		const latestVersion = execSync('npm show meritt-cli version')
+		const latestVersion = execSync('npm show @mhmdhammoud/cli version')
 			.toString()
 			.trim()
 		const currentVersion = require('./package.json').version
