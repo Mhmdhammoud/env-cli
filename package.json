@@ -1,6 +1,6 @@
 {
-	"name": "@mhmdhammoud/cli",
-	"version": "1.0.2",
+	"name": "@merittdev/cli",
+	"version": "1.0.0",
 	"description": "",
 	"type": "module",
 	"main": "dist/index.js",
@@ -11,7 +11,9 @@
 		"lint": "eslint src --fix",
 		"test:types": "tsc --noemit",
 		"build": "tsc",
-		"prepublishOnly": "npm run build"
+		"prepublishOnly": "npm run build",
+		"start": "node dist/index.js",
+		"watch": "tsc -w"
 	},
 	"keywords": [],
 	"author": "",

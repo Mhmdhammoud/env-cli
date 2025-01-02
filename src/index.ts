@@ -16,6 +16,9 @@ import {
 	showDocumentation,
 } from './utils/helpers.js'
 import {execSync} from 'child_process'
+import {createRequire} from 'node:module' // Import createRequire
+import commands from './constants/commands.js'
+const require = createRequire(import.meta.url) // Create a require function
 
 const program = new Command()
 const SERVICE_NAME = 'meritt-cli'
@@ -99,50 +102,10 @@ const backupEnvFile = (envFilePath: string): void => {
 	)
 }
 
-const commands = [
-	{
-		name: `${emoji.get('key')} meritt login`,
-		description: 'Log in to your Meritt account',
-	},
-	{
-		name: `${emoji.get('globe_with_meridians')} meritt fetch-env [environment]`,
-		description:
-			'Fetch and create a .env file for the current project and specified environment',
-	},
-	{
-		name: `${emoji.get('outbox_tray')} meritt logout`,
-		description: 'Log out of your Meritt account',
-	},
-	{
-		name: `${emoji.get('books')} meritt docs`,
-		description: 'Open the Meritt CLI documentation in your browser',
-	},
-	{
-		name: `${emoji.get('gear')} meritt install`,
-		description: 'Set up the Meritt CLI configuration file',
-	},
-	{
-		name: `${emoji.get('information')} meritt help`,
-		description: 'Display help information',
-	},
-	{
-		name: `${emoji.get('floppy_disk')} meritt recover`,
-		description: 'Restore the .env file from backup',
-	},
-	{
-		name: `${emoji.get('speech_balloon')} meritt interactive`,
-		description: 'Start the CLI in interactive mode',
-	},
-	{
-		name: `${emoji.get('warning')} meritt check-updates`,
-		description: 'Check for updates to the Meritt CLI',
-	},
-]
-
 const table = new Table({
 	head: [
 		chalk.bold(`${emoji.get('gear')} Command`),
-		chalk.bold(`${emoji.get('information')} Description`),
+		chalk.bold(`${emoji.get('speech_balloon')} Description`),
 	],
 	colWidths: [40, 60],
 	style: {
@@ -208,9 +171,9 @@ program
 		}
 	})
 
-// Fetch-env command
+// env command
 program
-	.command('fetch-env [environment]')
+	.command('env [environment]')
 	.description(
 		'Fetch and create a .env file for the current project and specified environment'
 	)
@@ -387,19 +350,21 @@ program
 				type: 'list',
 				name: 'command',
 				message: 'What would you like to do?',
-				choices: ['login', 'fetch-env', 'logout', 'help'],
+				choices: ['login', 'env', 'logout', 'help'],
 			},
 		])
 		program.parse([process.argv[0], process.argv[1], command])
 	})
 program
-	.command('check-updates')
+	.command('update')
 	.description('Check for updates to the Meritt CLI')
-	.action(() => {
-		const latestVersion = execSync('npm show @mhmdhammoud/cli version')
+	.action(async () => {
+		const currentVersion = require('../package.json').version
+		const currentName = require('../package.json').name
+
+		const latestVersion = execSync(`npm show ${currentName} version`)
 			.toString()
 			.trim()
-		const currentVersion = require('./package.json').version
 		if (latestVersion === currentVersion) {
 			console.log(
 				chalk.green(
@@ -413,9 +378,33 @@ program
 				chalk.yellow(
 					`${emoji.get(
 						'warning'
-					)}  A new version (${latestVersion}) is available. Run \`npm install -g meritt-cli\` to update.`
+					)}  A new version (${latestVersion}) is available. You can run \`npm install -g @mhmdhammoud/cli\` to update.`
 				)
 			)
+			// ask if they want to update
+			const {update} = await inquirer.prompt([
+				{
+					type: 'confirm',
+					name: 'update',
+					message: 'Would you like to update now?',
+					default: false,
+				},
+			])
+			if (update) {
+				console.log(
+					chalk.blue(
+						`${emoji.get('rocket')}  Updating to the latest version...`
+					)
+				)
+				execSync('npm install -g @mhmdhammoud/cli')
+				console.log(
+					chalk.green(
+						`${emoji.get(
+							'white_check_mark'
+						)}  Updated to the latest version (${latestVersion}).`
+					)
+				)
+			}
 		}
 	})
 
