@@ -18,7 +18,7 @@ Meritt CLI is a command-line tool designed to manage environment variables effic
 To install Meritt CLI, you can use npm:
 
 ```sh
-npm install -g @mhmdhammoud/cli
+npm install -g @merittdev/cli
 ```
 
 ## Usage
@@ -40,7 +40,7 @@ meritt login
 ### Fetch and create a .env file for the current project and specified environment
 
 ```sh
-meritt env [environment]
+meritt env <environment> # e.g. meritt env development
 ```
 
 ### Log out of your Meritt account

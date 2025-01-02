@@ -378,7 +378,7 @@ program
 				chalk.yellow(
 					`${emoji.get(
 						'warning'
-					)}  A new version (${latestVersion}) is available. You can run \`npm install -g @mhmdhammoud/cli\` to update.`
+					)}  A new version (${latestVersion}) is available. You can run \`npm install -g ${currentName}\` to update.`
 				)
 			)
 			// ask if they want to update
@@ -396,7 +396,7 @@ program
 						`${emoji.get('rocket')}  Updating to the latest version...`
 					)
 				)
-				execSync('npm install -g @mhmdhammoud/cli')
+				execSync(`npm install -g ${currentName}`)
 				console.log(
 					chalk.green(
 						`${emoji.get(
