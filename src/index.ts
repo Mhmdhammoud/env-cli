@@ -12,6 +12,7 @@ import * as emoji from 'node-emoji'
 import open from 'open'
 import {
 	getProjectNameFromPackageJson,
+	hideFolderOnWindows,
 	showDocumentation,
 } from './utils/helpers.js'
 import {execSync} from 'child_process'
@@ -48,6 +49,10 @@ const createConfigFile = async (): Promise<void> => {
 
 	if (!fs.existsSync(CONFIG_DIR)) {
 		fs.mkdirSync(CONFIG_DIR, {recursive: true})
+	}
+	// Hide the folder on Windows
+	if (process.platform === 'win32') {
+		hideFolderOnWindows(CONFIG_DIR)
 	}
 
 	fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2))
@@ -111,6 +116,26 @@ const commands = [
 	{
 		name: `${emoji.get('books')} meritt docs`,
 		description: 'Open the Meritt CLI documentation in your browser',
+	},
+	{
+		name: `${emoji.get('gear')} meritt install`,
+		description: 'Set up the Meritt CLI configuration file',
+	},
+	{
+		name: `${emoji.get('information')} meritt help`,
+		description: 'Display help information',
+	},
+	{
+		name: `${emoji.get('floppy_disk')} meritt recover`,
+		description: 'Restore the .env file from backup',
+	},
+	{
+		name: `${emoji.get('speech_balloon')} meritt interactive`,
+		description: 'Start the CLI in interactive mode',
+	},
+	{
+		name: `${emoji.get('warning')} meritt check-updates`,
+		description: 'Check for updates to the Meritt CLI',
 	},
 ]
 

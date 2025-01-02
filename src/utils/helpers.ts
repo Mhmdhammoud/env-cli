@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import * as emojify from 'node-emoji'
 import path from 'path'
 import fs from 'fs'
+import {execSync} from 'child_process'
 export const showDocumentation = (CONFIG_FILE: string): void => {
 	console.log(
 		chalk.cyan(`${emojify.get('books')}  Documentation for config.json:`)
@@ -34,5 +35,14 @@ export const getProjectNameFromPackageJson = (): string | null => {
 			)
 		)
 		return null
+	}
+}
+export const hideFolderOnWindows = (folderPath: string): void => {
+	try {
+		// Use the `attrib` command to set the hidden attribute
+		execSync(`attrib +h "${folderPath}"`)
+		console.log(`Folder "${folderPath}" is now hidden.`)
+	} catch (error) {
+		console.error(`Failed to hide folder "${folderPath}":`, error)
 	}
 }
