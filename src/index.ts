@@ -360,6 +360,7 @@ program
 	.command('update')
 	.description('Check for updates to the Meritt CLI')
 	.action(async () => {
+		console.log(chalk.blue(`${emoji.get('rocket')}  Checking for updates...`))
 		const currentVersion = require('../package.json').version
 		const currentName = require('../package.json').name
 
