@@ -1,6 +1,6 @@
 {
 	"name": "@merittdev/cli",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Meritt CLI is a command-line tool designed to manage environment variables efficiently. It allows you to easily set, get, and delete environment variables for your projects, as well as manage your Meritt account. This tool is specifically made for Meritt.dev projects.",
 	"type": "module",
 	"main": "dist/index.js",

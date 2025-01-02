@@ -108,6 +108,7 @@ const table = new Table({
 		chalk.bold(`${emoji.get('speech_balloon')} Description`),
 	],
 	colWidths: [40, 60],
+	wordWrap: true,
 	style: {
 		head: ['cyan'],
 		border: ['green'],

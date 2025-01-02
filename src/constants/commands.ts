@@ -34,8 +34,8 @@ const commands = [
 		description: 'Start the CLI in interactive mode',
 	},
 	{
-		name: `${emoji.get('warning')} meritt check-updates`,
-		description: 'Check for updates to the Meritt CLI',
+		name: `${emoji.get('warning')} meritt update`,
+		description: 'Checks and updates the Meritt CLI',
 	},
 ]
 export default commands
