@@ -16,6 +16,8 @@ import {
 	showDocumentation,
 } from './utils/helpers.js'
 import {execSync} from 'child_process'
+import {createRequire} from 'node:module' // Import createRequire
+const require = createRequire(import.meta.url) // Create a require function
 
 const program = new Command()
 const SERVICE_NAME = 'meritt-cli'
@@ -122,7 +124,7 @@ const commands = [
 		description: 'Set up the Meritt CLI configuration file',
 	},
 	{
-		name: `${emoji.get('information')} meritt help`,
+		name: `${emoji.get('globe_with_meridians')} meritt help`,
 		description: 'Display help information',
 	},
 	{
@@ -399,7 +401,7 @@ program
 		const latestVersion = execSync('npm show @mhmdhammoud/cli version')
 			.toString()
 			.trim()
-		const currentVersion = require('./package.json').version
+		const currentVersion = require('../package.json').version // Use require
 		if (latestVersion === currentVersion) {
 			console.log(
 				chalk.green(
@@ -413,7 +415,7 @@ program
 				chalk.yellow(
 					`${emoji.get(
 						'warning'
-					)}  A new version (${latestVersion}) is available. Run \`npm install -g meritt-cli\` to update.`
+					)}  A new version (${latestVersion}) is available. Run \`npm install -g @mhmdhammoud/cli\` to update.`
 				)
 			)
 		}
